@@ -1,4 +1,4 @@
-﻿export default function Home() {
+export default function Home() {
   return (
     <div className="visitor-content">
       <section className="hero">
@@ -12,32 +12,32 @@
         <h2>Features</h2>
         <div className="feature-grid">
           <div className="feature-card">
-            <div className="feature-icon">ðŸ“</div>
+            <div className="feature-icon">📝</div>
             <h3>Markdown Editor</h3>
             <p>Full-featured Markdown with live preview.</p>
           </div>
           <div className="feature-card">
-            <div className="feature-icon">âœï¸</div>
+            <div className="feature-icon">✍️</div>
             <h3>Excalidraw Integration</h3>
             <p>Embed diagrams and sketches in notes.</p>
           </div>
           <div className="feature-card">
-            <div className="feature-icon">ðŸ“‚</div>
+            <div className="feature-icon">📁</div>
             <h3>File Management</h3>
             <p>Organize with folders and files.</p>
           </div>
           <div className="feature-card">
-            <div className="feature-icon">â˜ï¸</div>
+            <div className="feature-icon">☁️</div>
             <h3>Cloud Sync</h3>
             <p>Sync across devices.</p>
           </div>
           <div className="feature-card">
-            <div className="feature-icon">ðŸŽ¨</div>
+            <div className="feature-icon">🎨</div>
             <h3>Custom Themes</h3>
             <p>Multiple themes and colors.</p>
           </div>
           <div className="feature-card">
-            <div className="feature-icon">ðŸ”</div>
+            <div className="feature-icon">🔍</div>
             <h3>Full-Text Search</h3>
             <p>Search all notes instantly.</p>
           </div>

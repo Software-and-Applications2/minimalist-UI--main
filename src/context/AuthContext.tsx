@@ -1,8 +1,9 @@
-﻿import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
 
 interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
+  token: string | null;
   login: (password: string) => Promise<boolean>;
   logout: () => void;
 }
@@ -12,10 +13,14 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("admin_token");
-    if (token) setIsAuthenticated(true);
+    const storedToken = localStorage.getItem("admin_token");
+    if (storedToken) {
+      setIsAuthenticated(true);
+      setToken(storedToken);
+    }
     setIsLoading(false);
   }, []);
 
@@ -28,8 +33,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       });
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem("admin_token", data.token || "authenticated");
+        const tokenValue = data.token || "authenticated";
+        localStorage.setItem("admin_token", tokenValue);
         setIsAuthenticated(true);
+        setToken(tokenValue);
         return true;
       }
       return false;
@@ -38,8 +45,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (import.meta.env.DEV) {
         const envPassword = import.meta.env.VITE_ADMIN_PASSWORD;
         if (envPassword && password === envPassword) {
-          localStorage.setItem("admin_token", "authenticated");
+          const tokenValue = "authenticated";
+          localStorage.setItem("admin_token", tokenValue);
           setIsAuthenticated(true);
+          setToken(tokenValue);
           return true;
         }
       }
@@ -50,10 +59,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = () => {
     localStorage.removeItem("admin_token");
     setIsAuthenticated(false);
+    setToken(null);
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, isLoading, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, isLoading, token, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
